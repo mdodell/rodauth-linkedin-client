@@ -10,19 +10,6 @@ const Home: NextPage = () => {
 
   const [linkedInState, setLinkedInState] = useState<any>(null);
 
-  useEffect(() => {
-    const fetchProfile = async () => {
-      fetch("http://localhost:3000/profile", {
-        method: "GET",
-        credentials: "include",
-      })
-        .then((resp) => resp.json())
-        .then((resp) => setLinkedInState(resp))
-        .catch((e) => console.log(e));
-    };
-    fetchProfile();
-  }, []);
-
   const logout = useCallback(() => {
     const logoutProfile = async () => {
       fetch("http://localhost:3000/logout", {
