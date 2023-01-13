@@ -8,24 +8,6 @@ import useLinkedin from "./useLinkedIn";
 const Home: NextPage = () => {
   const [linkedInState, setLinkedInState] = useState<any>(null);
 
-  const logout = useCallback(() => {
-    const logoutProfile = async () => {
-      fetch("http://localhost:3000/logout", {
-        headers: {
-          "Content-Type": "application/json",
-          // 'Content-Type': 'application/x-www-form-urlencoded',
-        },
-        method: "POST",
-        credentials: "include",
-        body: "",
-      })
-        .then((resp) => resp.json())
-        .then(() => setLinkedInState(null))
-        .catch((e) => console.log({ e }));
-    };
-    logoutProfile();
-  }, []);
-
   const login = useCallback(() => {
     const loginProfile = async () => {
       fetch("http://localhost:3000/auth/linkedin", {
@@ -45,7 +27,6 @@ const Home: NextPage = () => {
       <h1>LinkedIn Auth</h1>
       <p>{JSON.stringify(linkedInState)}</p>
       <button onClick={() => login()}>LinkedIn Auth</button>
-      <button onClick={() => logout()}>Logout</button>
     </div>
   );
 };
