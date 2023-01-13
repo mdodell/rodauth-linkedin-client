@@ -6,8 +6,6 @@ import styles from "../styles/Home.module.css";
 import useLinkedin from "./useLinkedIn";
 
 const Home: NextPage = () => {
-  const { authorizationCodeUrl } = useLinkedin();
-
   const [linkedInState, setLinkedInState] = useState<any>(null);
 
   const logout = useCallback(() => {
@@ -27,13 +25,26 @@ const Home: NextPage = () => {
     };
     logoutProfile();
   }, []);
+
+  const login = useCallback(() => {
+    const loginProfile = async () => {
+      fetch("http://localhost:3000/auth/linkedin", {
+        headers: {
+          "Content-Type": "application/json",
+        },
+        method: "POST",
+      })
+        .then((resp) => resp.json())
+        .then((res) => window.open(res.authorize_url))
+        .catch((e) => console.log({ e }));
+    };
+    loginProfile();
+  }, []);
   return (
     <div className={styles.container}>
       <h1>LinkedIn Auth</h1>
       <p>{JSON.stringify(linkedInState)}</p>
-      <button onClick={() => window.open(authorizationCodeUrl)}>
-        LinkedIn Auth
-      </button>
+      <button onClick={() => login()}>LinkedIn Auth</button>
       <button onClick={() => logout()}>Logout</button>
     </div>
   );
